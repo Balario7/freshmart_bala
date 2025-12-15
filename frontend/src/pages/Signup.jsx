@@ -23,7 +23,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await signupApi(email, password);
+      await signupApi(email, password);
       setSuccess('Account created successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
