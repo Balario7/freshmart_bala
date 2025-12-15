@@ -1,7 +1,7 @@
 // API for login authentication
 export const loginApi = async (email, password) => {
   try {
-    const response = await fetch('http://localhost:3003/api/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -22,7 +22,7 @@ export const loginApi = async (email, password) => {
 // API for fetching products
 export const getProductsApi = async () => {
   try {
-    const response = await fetch('http://localhost:3003/api/products');
+    const response = await fetch('/api/products');
     return await response.json();
   } catch (error) {
     // Fallback data if backend is not available
@@ -44,7 +44,7 @@ export const getProductsApi = async () => {
 // API for user signup
 export const signupApi = async (email, password) => {
   try {
-    const response = await fetch('http://localhost:3003/api/signup', {
+    const response = await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -65,7 +65,7 @@ export const signupApi = async (email, password) => {
 // API for submitting order
 export const submitOrderApi = async (orderData) => {
   try {
-    const response = await fetch('http://localhost:3003/api/orders', {
+    const response = await fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)
