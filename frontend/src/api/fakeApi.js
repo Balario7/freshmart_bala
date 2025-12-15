@@ -1,34 +1,46 @@
+const BASE_URL = "https://freshmart-bala.onrender.com";
+
 // API for login authentication
 export const loginApi = async (email, password) => {
   try {
-    const response = await fetch('/api/login', {
+    const response = await fetch(`${BASE_URL}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-    
+
     const data = await response.json();
-    
+
     if (data.success) {
       return data;
     } else {
       throw new Error(data.message);
     }
   } catch (error) {
-    throw new Error('Backend connection failed');
+    // Fallback to localStorage if backend is not available
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+
+    if (!users[email]) {
+      throw new Error('Email not registered. Please sign up first.');
+    }
+
+    if (users[email].password !== password) {
+      throw new Error('Password is incorrect. Please type the correct password.');
+    }
+
+    return { success: true, user: { email: email, name: 'User' } };
   }
 };
 
 // API for fetching products
 export const getProductsApi = async () => {
   try {
-    const response = await fetch('/api/products');
+    const response = await fetch(`${BASE_URL}/api/products`);
     return await response.json();
   } catch (error) {
     // Fallback data if backend is not available
     const products = [
       { id: '5', name: 'Fresh Bananas', price: 40, image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=250&h=180&fit=crop', category: 'Fruits' },
-      
       { id: '6', name: 'Fresh Milk', price: 65, image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=250&h=180&fit=crop', category: 'Dairy' },
       { id: '7', name: 'Tomatoes', price: 30, image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=250&h=180&fit=crop', category: 'Vegetables' },
       { id: '8', name: 'Potatoes', price: 25, image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=250&h=180&fit=crop', category: 'Vegetables' },
@@ -44,42 +56,52 @@ export const getProductsApi = async () => {
 // API for user signup
 export const signupApi = async (email, password) => {
   try {
-    const response = await fetch('/api/signup', {
+    const response = await fetch(`${BASE_URL}/api/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     });
-    
+
     const data = await response.json();
-    
+
     if (data.success) {
       return data;
     } else {
       throw new Error(data.message);
     }
   } catch (error) {
-    throw new Error('Backend connection failed');
+    // Fallback to localStorage if backend is not available
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+
+    if (users[email]) {
+      throw new Error('Email already registered');
+    }
+
+    users[email] = { email, password };
+    localStorage.setItem('users', JSON.stringify(users));
+
+    return { success: true, message: 'Account created successfully!' };
   }
 };
 
 // API for submitting order
 export const submitOrderApi = async (orderData) => {
   try {
-    const response = await fetch('/api/orders', {
+    const response = await fetch(`${BASE_URL}/api/orders`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)
     });
-    
+
     return await response.json();
   } catch (error) {
     // Fallback if backend is not available
     const orderId = 'FM' + Date.now();
-    return { 
-      success: true, 
-      orderId, 
+    return {
+      success: true,
+      orderId,
       message: 'Order placed successfully!',
-      orderData 
+      orderData
     };
   }
 };
