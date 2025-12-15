@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Palace</title>
+
+    <!-- TAILwind CDN (No Installation Needed) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-red-600 text-white py-4 px-6 flex justify-between items-center">
+        <h1 class="text-3xl font-extrabold tracking-wide">FOOD PALACE</h1>
+
+        <div class="space-x-4">
+            <button class="bg-yellow-400 text-black px-4 py-2 rounded-lg hover:bg-yellow-500">Home</button>
+            <button class="bg-green-500 px-4 py-2 rounded-lg hover:bg-green-600">Login</button>
+            <button class="bg-blue-500 px-4 py-2 rounded-lg hover:bg-blue-600">Cart</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-cover bg-center h-96 flex items-center justify-center"
+        style="background-image: url('foodbg.jpg');">
+
+        <div class="bg-black/60 p-6 rounded-xl text-center">
+            <h2 class="text-4xl font-bold text-white drop-shadow-lg">
+                Welcome to Food Palace
+            </h2>
+            <p class="text-white mt-3 text-lg">
+                Delicious food, fresh ingredients, fast delivery — All at your fingertips!
+            </p>
+        </div>
+
+    </section>
+
+    <!-- Food Items Section -->
+    <section class="py-10 text-center">
+        <h3 class="text-3xl font-bold mb-6">Our Special Dishes</h3>
+
+        <div class="flex flex-wrap justify-center gap-6">
+
+            <!-- Food Card 1 -->
+            <div class="bg-white w-72 rounded-xl shadow-lg p-4">
+                <img src="burger.jpeg" class="rounded-lg">
+                <h3 class="text-xl font-bold mt-3">Cheese Burger</h3>
+                <p class="font-semibold text-gray-700">$8.99</p>
+                <button class="bg-red-600 text-white w-full py-2 mt-3 rounded-lg hover:bg-red-700">
+                    Add to Cart
+                </button>
+            </div>
+
+            <!-- Food Card 2 -->
+            <div class="bg-white w-72 rounded-xl shadow-lg p-4">
+                <img src="italian pizza.jpg" class="rounded-lg">
+                <h3 class="text-xl font-bold mt-3">Italian Pizza</h3>
+                <p class="font-semibold text-gray-700">$12.50</p>
+                <button class="bg-red-600 text-white w-full py-2 mt-3 rounded-lg hover:bg-red-700">
+                    Add to Cart
+                </button>
+            </div>
+
+            <!-- Food Card 3 -->
+            <div class="bg-white w-72 rounded-xl shadow-lg p-4">
+                <img src="italian pasta.jpg" class="rounded-lg">
+                <h3 class="text-xl font-bold mt-3">Creamy Pasta</h3>
+                <p class="font-semibold text-gray-700">$9.99</p>
+                <button class="bg-red-600 text-white w-full py-2 mt-3 rounded-lg hover:bg-red-700">
+                    Add to Cart
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>

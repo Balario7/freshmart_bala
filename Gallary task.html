@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <link rel="stylesheet" href="gallery.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .overlay {
+    transform: translateY(0);
+}
+
+.overlay h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.overlay p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .gallery-item img {
+        height: 200px;
+    }
+    
+    header {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Photo Gallery</h1>
+        <p>Explore our collection of beautiful images</p>
+    </header>
+
+    <div class="container">
+        <div class="gallery">
+            <div class="gallery-item item-1">
+                <img src="img1.jpg" alt="Image 1">
+                <div class="overlay">
+                    <h3>Nature Scene</h3>
+                    <p>Beautiful landscape</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item item-2">
+                <img src="img2.jpg" alt="Image 2">
+                <div class="overlay">
+                    <h3>City View</h3>
+                    <p>Urban architecture</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item item-3">
+                <img src="img3.jpg" alt="Image 3">
+                <div class="overlay">
+                    <h3>Ocean Waves</h3>
+                    <p>Peaceful waters</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item item-4">
+                <img src="img4.jpg" alt="Image 4">
+                <div class="overlay">
+                    <h3>Mountain Peak</h3>
+                    <p>High altitude view</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item item-5">
+                <img src="img5.jpg" alt="Image 5">
+                <div class="overlay">
+                    <h3>Forest Path</h3>
+
+                    <p>Walking trail</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item item-6">
+                <img src="img6.jpeg" alt="Image 6">
+                <div class="overlay">
+                    <h3>Desert Sunset</h3>
+                    <p>Golden hour</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item item-7">    
+                <img src="img7.jpeg" alt="Image 7">
+                <div class="overlay">
+                    <h3>River Flow</h3>
+                    <p>Flowing water</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item item-8">
+                <img src="img8.jpg" alt="Image 8">
+                <div class="overlay">
+                    <h3>Sky View</h3>
+                    <p>Cloud formations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

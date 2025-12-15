@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — My Site</title>
+
+  <!-- Bootstrap CSS (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Small aesthetic tweaks */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+    }
+    .card {
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(20,20,50,0.08);
+    }
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      display: inline-grid;
+      place-items: center;
+      background: linear-gradient(135deg,#6c63ff,#00c6ff);
+      color: white;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-10 col-md-8 col-lg-5">
+        <div class="card p-4 mt-5">
+          <div class="d-flex align-items-center mb-3">
+            <div class="logo me-3">MS</div>
+            <div>
+              <h4 class="mb-0">Welcome back</h4>
+              <small class="text-muted">Sign in to continue to your account</small>
+            </div>
+          </div>
+
+          <!-- Login Form -->
+          <form id="loginForm" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="name@example.com"
+                required
+                autocomplete="username"
+              >
+              <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
+
+            <div class="mb-3 position-relative">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  minlength="6"
+                  required
+                  autocomplete="current-password"
+                >
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword" aria-label="Show password">
+                  Show
+                </button>
+              </div>
+              <div class="form-text">Minimum 6 characters.</div>
+              <div class="invalid-feedback">Please enter your password (min 6 characters).</div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                <label class="form-check-label" for="remember">Remember me</label>
+              </div>
+              <a href="#" class="small">Forgot password?</a>
+            </div>
+
+            <div class="d-grid mb-2">
+              <button id="submitBtn" class="btn btn-primary" type="submit">Sign in</button>
+            </div>
+
+            <div class="text-center">
+              <small class="text-muted">Don't have an account? <a href="#">Sign up</a></small>
+            </div>
+          </form>
+
+          <!-- Feedback / result -->
+          <div id="resultMsg" class="mt-3" style="display:none;"></div>
+        </div>
+
+        <p class="text-center text-muted small mt-3">© <span id="year"></span> My Site</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (bundle includes Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Set copyright year
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+    // Toggle password show/hide
+    const toggleBtn = document.getElementById('togglePassword');
+    const pwdInput = document.getElementById('password');
+    toggleBtn.addEventListener('click', () => {
+      const isPwd = pwdInput.type === 'password';
+      pwdInput.type = isPwd ? 'text' : 'password';
+      toggleBtn.textContent = isPwd ? 'Hide' : 'Show';
+      toggleBtn.setAttribute('aria-pressed', String(isPwd));
+    });
+
+    // Bootstrap-style validation + submit handler
+    const form = document.getElementById('loginForm');
+    const resultMsg = document.getElementById('resultMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Bootstrap validation classes
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+      }
+
+      // Collect form data
+      const data = {
+        email: form.email.value.trim(),
+        password: form.password.value,
+        remember: form.remember.checked
+      };
+
+      // Simple UI feedback
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Signing in...';
+      resultMsg.style.display = 'none';
+      resultMsg.className = '';
+
+      try {
+        // Example: send to your backend API endpoint
+        // Uncomment and edit the URL to use a real backend.
+        /*
+        const resp = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        const json = await resp.json();
+        if (!resp.ok) throw new Error(json.message || 'Login failed');
+        */
+
+        // For demo: fake success (remove this block when using real backend)
+        await new Promise(r => setTimeout(r, 700)); // simulate network
+        const fakeResponse = { ok: true, user: { name: 'John Doe' } };
+
+        // Handle success
+        if (fakeResponse.ok) {
+          resultMsg.style.display = 'block';
+          resultMsg.className = 'alert alert-success';
+          resultMsg.textContent = 'Login successful — redirecting...';
+          // Example: redirect after login
+          // window.location.href = '/dashboard';
+        } else {
+          throw new Error('Invalid credentials');
+        }
+      } catch (err) {
+        resultMsg.style.display = 'block';
+        resultMsg.className = 'alert alert-danger';
+        resultMsg.textContent = err.message || 'An error occurred';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign in';
+      }
+    });
+  </script>
+</body>
+</html>

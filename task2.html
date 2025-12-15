@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta-name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Raju's Food</title>
+    <link rel="stylesheet" href="login.css" />
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 350px;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.login-container h2 {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 15px 0;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.extras {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.extras a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #ff6600;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #ff8c00;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #e67e00;
+}
+
+.signup {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.signup a {
+    color: #ff6600;
+    font-weight: bold;
+    text-decoration: none;
+}
+    </style>
+
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>bala's Food Login</h2>
+
+        <form>
+            <label>Email</label>
+            <input type="email" placeholder="Enter your email" required />
+
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password" required />
+
+            <div class="extras">
+                <label>
+                    <input type="checkbox" /> Remember Me
+                </label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit">Login</button>
+
+            <p class="signup">Don't have an account? <a href="#">Sign Up</a></p>
+        </form>
+    </div>
+
+</body>
+</html>

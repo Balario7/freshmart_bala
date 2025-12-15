@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Movie Ticket Booking (9 fields)</title>
+  <style>
+    :root{
+      --accent1:#667eea; --accent2:#764ba2; --bg:linear-gradient(135deg,var(--accent1),var(--accent2));
+      --card:#fff; --error:#d9534f; --muted:#666;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:Arial,Helvetica,sans-serif;background:var(--bg);padding:20px;color:#222;}
+    .container{max-width:680px;width:100%;background:var(--card);border-radius:12px;padding:26px;box-shadow:0 18px 40px rgba(0,0,0,0.15)}
+    h1{margin:0 0 8px;font-size:1.5rem}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+    form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-weight:600;margin-bottom:6px;font-size:0.95rem}
+    input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, input[type="date"]{
+      width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:6px;font-size:0.95rem;
+    }
+    input:focus, select:focus{outline:none;border-color:var(--accent1);box-shadow:0 0 0 4px rgba(102,126,234,0.07)}
+    .full{grid-column:1/-1}
+    .error{color:var(--error);font-size:0.85rem;margin-top:6px;display:none}
+    .actions{grid-column:1/-1;display:flex;justify-content:space-between;margin-top:14px}
+    .btn{padding:11px 16px;border-radius:8px;border:none;cursor:pointer;background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff;font-weight:700}
+    .btn.secondary{background:transparent;border:1px solid #ccc;color:#333}
+    @media(max-width:680px){form{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Movie Ticket Booking</h1>
+    <p class="lead">Fill required fields to confirm booking. (Promo omitted — kept form to 9 fields.)</p>
+
+    <form id="bookingForm" onsubmit="handleSubmit(event)">
+      <!-- 1 Full Name -->
+      <div>
+        <label for="fullName">Full Name</label>
+        <input id="fullName" type="text" placeholder="Your full name"/>
+        <div class="error" id="err-name">Please enter your full name.</div>
+      </div>
+
+      <!-- 2 Email -->
+      <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="you@example.com"/>
+        <div class="error" id="err-email">Please enter a valid email address.</div>
+      </div>
+
+      <!-- 3 Phone -->
+      <div>
+        <label for="phone">Phone (10 digits)</label>
+        <input id="phone" type="tel" maxlength="10" placeholder="9876543210"/>
+        <div class="error" id="err-phone">Please enter a valid 10-digit phone number.</div>
+      </div>
+
+      <!-- 4 Movie -->
+      <div>
+        <label for="movie">Movie Title</label>
+        <select id="movie">
+          <option value="">Select a movie</option>
+          <option>Edge of Tomorrow 2</option>
+          <option>The Galactic Voyage</option>
+          <option>Comedy Nights Live</option>
+        </select>
+        <div class="error" id="err-movie">Please select a movie.</div>
+      </div>
+
+      <!-- 5 Date -->
+      <div>
+        <label for="date">Show Date</label>
+        <input id="date" type="date"/>
+        <div class="error" id="err-date">Choose today or a future date.</div>
+      </div>
+
+      <!-- 6 Time -->
+      <div>
+        <label for="time">Show Time</label>
+        <select id="time">
+          <option value="">Select time</option>
+          <option>10:00 AM</option>
+          <option>1:30 PM</option>
+          <option>4:30 PM</option>
+          <option>7:00 PM</option>
+        </select>
+        <div class="error" id="err-time">Please select a show time.</div>
+      </div>
+
+      <!-- 7 Tickets -->
+      <div>
+        <label for="tickets">Number of Tickets</label>
+        <input id="tickets" type="number" min="1" max="10" value="1"/>
+        <div class="error" id="err-tickets">Enter an integer between 1 and 10.</div>
+      </div>
+
+      <!-- 8 Seat Type -->
+      <div>
+        <label>Seat Type</label>
+        <div style="display:flex;gap:10px;align-items:center">
+          <label><input type="radio" name="seat" value="Regular"> Regular</label>
+          <label><input type="radio" name="seat" value="Premium"> Premium</label>
+          <label><input type="radio" name="seat" value="VIP"> VIP</label>
+        </div>
+        <div class="error" id="err-seat">Please choose a seat type.</div>
+      </div>
+
+      <!-- 9 Card Number -->
+      <div class="full">
+        <label for="cardNumber">Card Number</label>
+        <input id="cardNumber" type="text" maxlength="19" placeholder="Digits only (13-19)"/>
+        <div class="error" id="err-card">Enter a valid card number (13-19 digits).</div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn secondary" onclick="resetForm()">Reset</button>
+        <button class="btn" type="submit">Confirm Booking</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // helpers
+    function showError(id, msg){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.textContent = msg;
+      el.style.display = 'block';
+    }
+    function hideError(id){
+      const el = document.getElementById(id);
+      if(el) el.style.display = 'none';
+    }
+    function clearAllErrors(){
+      document.querySelectorAll('.error').forEach(e => e.style.display = 'none');
+    }
+    function isValidEmail(email){
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+    function isValidPhone(phone){
+      return /^[6-9]\d{9}$/.test(phone); // Indian-style; adjust if needed
+    }
+    function onlyDigits(str){ return /^\d+$/.test(str); }
+
+    function resetForm(){
+      document.getElementById('bookingForm').reset();
+      clearAllErrors();
+    }
+
+    function handleSubmit(e){
+      e.preventDefault();
+      clearAllErrors();
+
+      const name = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const movie = document.getElementById('movie').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const ticketsRaw = document.getElementById('tickets').value;
+      const cardRaw = document.getElementById('cardNumber').value.replace(/\s+/g,'');
+      const seatEls = document.getElementsByName('seat');
+
+      let valid = true;
+
+      // 1 required name
+      if(!name){ showError('err-name','Please enter your full name.'); valid=false; }
+
+      // 2 email
+      if(!email || !isValidEmail(email)){ showError('err-email','Please enter a valid email.'); valid=false; }
+
+      // 3 phone
+      if(!phone || !isValidPhone(phone)){ showError('err-phone','Please enter a valid 10-digit phone number.'); valid=false; }
+
+      // 4 movie
+      if(!movie){ showError('err-movie','Please select a movie.'); valid=false; }
+
+      // 5 date not past
+      if(!date){ showError('err-date','Please select a show date.'); valid=false; }
+      else {
+        const sel = new Date(date + 'T00:00:00');
+        const now = new Date();
+        const todayZero = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        if(sel < todayZero){ showError('err-date','Show date cannot be in the past.'); valid=false; }
+      }
+
+      // 6 time
+      if(!time){ showError('err-time','Please select a show time.'); valid=false; }
+
+      // 7 tickets integer 1-10
+      const tickets = Number(ticketsRaw);
+      if(!ticketsRaw || !Number.isInteger(tickets) || tickets < 1 || tickets > 10){
+        showError('err-tickets','Enter an integer between 1 and 10.'); valid=false;
+      }
+
+      // 8 seat selected
+      let seatVal = '';
+      for(const s of seatEls) if(s.checked){ seatVal = s.value; break; }
+      if(!seatVal){ showError('err-seat','Please choose a seat type.'); valid=false; }
+
+      // 9 card number digits-only and length 13-19
+      if(!cardRaw || !onlyDigits(cardRaw) || cardRaw.length < 13 || cardRaw.length > 19){
+        showError('err-card','Enter a valid card number (13-19 digits).'); valid=false;
+      }
+
+      if(!valid){
+        const first = document.querySelector('.error[style*="block"]');
+        if(first) first.scrollIntoView({behavior:'smooth', block:'center'});
+        return;
+      }
+
+      // All good — show confirmation (replace with server call in production)
+      alert('Booking confirmed!\\n' +
+            `Name: ${name}\\nMovie: ${movie}\\nDate: ${date} ${time}\\nTickets: ${tickets}\\nSeat: ${seatVal}`);
+
+      // clear
+      document.getElementById('bookingForm').reset();
+    }
+  </script>
+</body>
+</html>
