@@ -9,6 +9,10 @@ export const loginApi = async (email, password) => {
       body: JSON.stringify({ email, password })
     });
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
 
     if (data.success) {
@@ -17,18 +21,22 @@ export const loginApi = async (email, password) => {
       throw new Error(data.message);
     }
   } catch (error) {
-    // Fallback to localStorage if backend is not available
-    const users = JSON.parse(localStorage.getItem('users')) || {};
+    // If it's a network error or the backend is not available
+    if (error.message.includes('fetch') || error.message.includes('HTTP error')) {
+      // Fallback to localStorage if backend is not available
+      const users = JSON.parse(localStorage.getItem('users')) || {};
 
-    if (!users[email]) {
-      throw new Error('Email not registered. Please sign up first.');
+      if (!users[email]) {
+        throw new Error('Email not registered. Please sign up first.');
+      }
+
+      if (users[email].password !== password) {
+        throw new Error('Password is incorrect. Please type the correct password.');
+      }
+
+      return { success: true, user: { email: email, name: 'User' } };
     }
-
-    if (users[email].password !== password) {
-      throw new Error('Password is incorrect. Please type the correct password.');
-    }
-
-    return { success: true, user: { email: email, name: 'User' } };
+    throw error;
   }
 };
 
@@ -62,6 +70,10 @@ export const signupApi = async (email, password) => {
       body: JSON.stringify({ email, password })
     });
 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
     const data = await response.json();
 
     if (data.success) {
@@ -70,17 +82,21 @@ export const signupApi = async (email, password) => {
       throw new Error(data.message);
     }
   } catch (error) {
-    // Fallback to localStorage if backend is not available
-    const users = JSON.parse(localStorage.getItem('users')) || {};
+    // If it's a network error or the backend is not available
+    if (error.message.includes('fetch') || error.message.includes('HTTP error')) {
+      // Fallback to localStorage if backend is not available
+      const users = JSON.parse(localStorage.getItem('users')) || {};
 
-    if (users[email]) {
-      throw new Error('Email already registered');
+      if (users[email]) {
+        throw new Error('Email already registered');
+      }
+
+      users[email] = { email, password };
+      localStorage.setItem('users', JSON.stringify(users));
+
+      return { success: true, message: 'Account created successfully!' };
     }
-
-    users[email] = { email, password };
-    localStorage.setItem('users', JSON.stringify(users));
-
-    return { success: true, message: 'Account created successfully!' };
+    throw error;
   }
 };
 
