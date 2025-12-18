@@ -7,16 +7,21 @@ require('dotenv').config();
 const apiRoutes = require('./routes/productroutes');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://freshmartbala.vercel.app', 'http://localhost:3001', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 
 // MongoDB Connection
 const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/freshmart';
 console.log('Attempting to connect to MongoDB...');
+console.log('Connection URI:', mongoUri.replace(/:\/\/([^:]+):([^@]+)@/, '://***:***@'));
 
 const mongoOptions = {
-  serverSelectionTimeoutMS: 10000,
+  serverSelectionTimeoutMS: 30000,
   socketTimeoutMS: 45000,
+  connectTimeoutMS: 30000,
   retryWrites: true,
   maxPoolSize: 10,
   minPoolSize: 2
