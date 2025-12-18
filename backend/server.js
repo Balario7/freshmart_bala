@@ -8,8 +8,10 @@ const apiRoutes = require('./routes/productroutes');
 
 const app = express();
 app.use(cors({
-  origin: ['https://freshmartbala.vercel.app', 'http://localhost:3001', 'http://localhost:3000'],
-  credentials: true
+  origin: ['https://freshmartbala.vercel.app', 'https://freshmart-bala.vercel.app', 'http://localhost:3001', 'http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
